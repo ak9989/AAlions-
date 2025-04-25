@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style1.css">
+</head>
+<body>
+
+    <form id="form" action="/" onsubmit="return validate()" >
+        <label>FirstName</label><br>
+        <input type="text" id="firstname" placeholder="First Name 
+        (Required)" >
+        <br>
+        <label>middile Name</label><br>
+        <input type="text" id="middlename" placeholder=" Middile name (Optional)">
+        <br>
+        <label>Last Name</label><br>
+        <input type="text" id="lastname" placeholder="Last Name (Required)" >
+        <br>
+        <label>Email</label><br>
+        <input type="email" id="email" placeholder="Email (Required)" >
+        <br>
+        <label>Phone Number</label><br>
+        <input type="text" id="Phonenumber" placeholder="Phonenumber (Required)" >
+        <br>
+        <label>Password</label><br>
+        <input type="password" id="password" placeholder="password (Required)" >
+        <br>
+        <label>confirm_Password</label><br>
+        <input type="password" id="confirm_Password" placeholder="confirm_Password (Required)">
+        <br>
+        <label>Comment box</label><br>
+        <textarea id="Comment" placeholder="Comment (Required)" rows="4" cols="50"></textarea><br>
+
+        <input type="submit" value="Submit">     
+    </form>
+    <script>
+        function validate(){
+            const f =document.getElementById('firstname').value;
+
+            const m = document.getElementById('middlename').value;
+
+            const l =document.getElementById('lastname').value;
+
+            const e =document.getElementById('email').value;
+            
+            const p =document.getElementById('Phonenumber').value;
+
+            const password=document.getElementById('password').value;
+
+            const confirm_Password =document.getElementById('confirm_Password').value;
+
+            const Comment =document.getElementById('Comment').value;
+
+           if(f == "" || f == null){
+                alert("please enter your name")
+                return false;
+            } 
+            else if(l == ""|| l == null){
+                alert("please enter your last name")
+                return false;
+            }
+            else if(e == "" || e == null){
+                alert("please enter your Email")
+                return false;
+            }
+            else if(p == "" || p == null){
+                alert("please enter your Phone number")
+                return false;
+            }
+            else if(password == "" || password == null || password.length<6){
+                alert("please enter a password or password must contain atlest  6 charecters")
+                return false;
+            }
+            else if(confirm_Password != password){
+                alert("the password does not match with above ")
+                return false;
+            }
+            else if(Comment == "" || Comment == null){
+                alert("please enter a comment")
+                return false;
+            }
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const exists = users.some(user => user.email === e || user.phone === p);
+
+            if (exists) {
+                alert("User already exists");
+                return false;
+            }
+           
+
+            users.push({
+                firstName: f,
+                middleName: m,
+                lastName: l,
+                email: e,
+                phone: p,
+                password: password,
+                comment: Comment
+            });
+
+            localStorage.setItem('users', JSON.stringify(users));
+            alert("User registered successfully!");
+            console.log("User registered:", users[users.length - 1]);
+            window.location.href = "login.html";
+            return false;
+            
+        }
+    </script>
+</body>
+</html>

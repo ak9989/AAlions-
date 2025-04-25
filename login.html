@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body>
+   
+    <form name="formv" action="/"   onsubmit="return validateForm()">
+        <div>
+        <h1>Login</h1>
+        <label for="name">Username</label>
+        <input type="text" name="name" id="Username" placeholder="Username" ><br><br>
+        <label for="password">password</label>
+        <input type="password" id="password" placeholder="password" >
+        <input type="submit" value="submit">
+        </div>
+        <p>are you a new user   <a href="register.html">Register here</a></p>
+    </form>
+
+    <script>
+        function validateForm(){
+            let username = document.getElementById('Username').value;
+            let password = document.getElementById('password').value;
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+
+            const user = users.find(user => (user.email === username || user.phone === username) && user.password === password);
+
+            if(username == ""){
+                alert("please enter your name")
+                return false;
+            } 
+            else if(password.length < 6){
+                alert("password must contain 6 charecters")
+                return false;
+            }
+            if (user) {
+                alert("Successfully logged in!");
+                return false; 
+            } else {
+                alert("User not found. Please register as new user.");
+                return false;
+            }
+        }
+      
+
+    </script>
+</body>
+
+</html>
